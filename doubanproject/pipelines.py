@@ -7,8 +7,14 @@
 
 
 class DoubanprojectPipeline(object):
+    def open_spider(self,spider):
+
+        print("*" * 50)
+
     def process_item(self, item, spider):
-        print(item)
-        print("*"*50)
-        print("4146")
+
         return item
+
+
+    def close_spider(self,spider):
+        print("4146")
