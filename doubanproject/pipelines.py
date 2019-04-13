@@ -10,4 +10,5 @@ class DoubanprojectPipeline(object):
     def process_item(self, item, spider):
         print(item)
         print("*"*50)
+        print("4146")
         return item
