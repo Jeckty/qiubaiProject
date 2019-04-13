@@ -12,8 +12,8 @@ class DoubanSpider(scrapy.Spider):
     items = []
     page=1
     def parse(self, response):
-        print("*"*40)
-        print(response.url)
+        #print("*"*40)
+        #print(response.url)
         div_list= response.xpath("//div[@id='content-left']/div")
         for odiv in div_list:
             item = DoubanprojectItem()
