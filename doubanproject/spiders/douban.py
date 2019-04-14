@@ -9,7 +9,6 @@ class DoubanSpider(scrapy.Spider):
     allowed_domains = ['www.qiushibaike.com']
     start_urls = ['http://www.qiushibaike.com/text/']
     basic_url= "https://www.qiushibaike.com/text/page/{}/"
-    items = []
     page=1
 
     def parse(self, response):
@@ -17,16 +16,29 @@ class DoubanSpider(scrapy.Spider):
         div_list= response.xpath("//div[@id='content-left']/div")
         for odiv in div_list:
             item = DoubanprojectItem()
+            #name
             item['name']=odiv.xpath(".//div//h2/text()").extract_first().strip()
-            item['sex']=odiv.xpath(".//div/div/@class").extract_first()
+            print(item['name'])
+
+            #sex
+            sex= odiv.xpath(".//div/div/@class").extract_first()
+            if item['name'] !="匿名用户":
+                sex= sex.split(' ')[1]
+                sex=sex[:-4]
+            print(sex)
+            item['sex']=sex
+
+            #age
             item['age']=odiv.xpath(".//div[@class='author clearfix']//div/text()").extract_first()
-            if item['age']==None :
+            if item['name'] == "匿名用户":
                 item['age']='0'
+
+            #content
             content=odiv.xpath(".//a[1]/div/span")
             item['content'] = content[0].xpath("string(.)").extract_first().strip()
             yield item
-            self.items.append(item)
-        if self.page <= 0:
+
+        if self.page <= 40:
             self.page+=1
             url=self.basic_url.format(self.page)
 

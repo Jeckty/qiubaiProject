@@ -14,8 +14,7 @@ class DoubanprojectPipeline(object):
 
 
     def process_item(self, item, spider):
-        sql = 'insert into qiutu ( name, age,content) values("%s", "%s","%s")' % (item['name'], 25,item['content'] )
-
+        sql = 'insert into qiubai ( name, age,sex,content) values("%s", "%s","%s","%s")' % (item['name'], item['age'],item['sex'],item['content'])
         try:
             self.cursor.execute(sql)
             print("#" * 50)
